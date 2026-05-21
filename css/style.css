@@ -13,8 +13,8 @@ h1 {
     /* espace entre les lettres */
 }
 
-
-form {
+/* Menu Principal */
+.menuPrincipal {
     background: #e8e8e8;
     border-radius: 16px;
     padding: 40px;
@@ -25,12 +25,12 @@ form {
     /* Taille du fond gris pour l'affichage du formulaire */
 }
 
-.pseudo {
+.menuPrincipal-pseudo {
     font-weight: bold;
     font-size: 25px;
 }
 
-input[type="text"] {
+.menuPrincpal-texte {
     width: 100%;
     padding: 14px;
     border: none;
@@ -38,7 +38,7 @@ input[type="text"] {
     font-size: 18px;
 }
 
-form p {
+.menuPrincipal p {
     font-weight: bold;
     font-size: 25px;
 }
@@ -82,4 +82,26 @@ form p {
 .btn-jouer:hover {
     background-color: #2adb74;
     transform: scale(1.03);
+}
+
+/* Grille de jeu */
+.grille {
+    border-collapse: collapse;
+}
+
+.grille td {
+    width: 80px;
+    height: 80px;
+    border: 1px solid;
+}
+
+.grille td:hover {
+    background-color: #e7dddd;
+}
+
+.grille td img {
+    width: 60px;
+    height: 60px;
+    display: block;
+    margin: auto;
 }
