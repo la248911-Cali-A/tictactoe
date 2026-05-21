@@ -22,7 +22,7 @@ h1 {
     flex-direction: column;
     align-items: center;
     width: 500px
-    /* Taille du fond gris pour l'affichage du formulaire */
+        /* Taille du fond gris pour l'affichage du formulaire */
 }
 
 .menuPrincipal-pseudo {
@@ -93,10 +93,7 @@ h1 {
     width: 80px;
     height: 80px;
     border: 1px solid;
-}
-
-.grille td:hover {
-    background-color: #e7dddd;
+    padding: 0;
 }
 
 .grille td img {
@@ -104,4 +101,16 @@ h1 {
     height: 60px;
     display: block;
     margin: auto;
+}
+
+.caseLibre {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.caseLibre:hover {
+    background-color: #d6d6d6;
 }
