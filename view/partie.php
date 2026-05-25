@@ -20,7 +20,7 @@
     $pionOrdi = ($pionJoueur == "croix") ? "cercle" : "croix"; // Choix du pion de l'ordi. On prend l'opposé du joueur
     $tailleGrille = (int) $_POST["grilleChoisie"];
     $grille = array_fill(0, $tailleGrille, array_fill(0, $tailleGrille, null)); // Création d'un tableau vide pour pouvoir afficher la grille du début
-    $pseudo = $_POST["pseudo"];
+    $pseudo = htmlspecialchars($_POST["pseudo"]);
 
     // Si c'est une requête AJAX (rejouer), on renvoie juste le HTML de la grille
     if (!empty($_POST['rejouer'])) {
@@ -171,6 +171,7 @@
                     let td = this.closest("td");
                     let ligne = parseInt(td.dataset.row);
                     let col = parseInt(td.dataset.col);
+                    let casesLibres = [];
 
                     // On place le pion du joueur dans le tableau
                     grille[ligne][col] = pionJoueur;
@@ -183,7 +184,17 @@
                     if (victoire) {
                         ouvrirModal("Vous avez gagné !");
                     } else {
-                        tourOrdi();
+                        for (let i = 0; i < taille; i++) {
+                            for (let j = 0; j < taille; j++) {
+                                if (grille[i][j] === null) casesLibres.push({ i, j });
+                            }
+                        }
+
+                        if (casesLibres.length === 0) {
+                            ouvrirModal("Match nul ! Voulez-vous rejouer ?");
+                        } else {
+                            tourOrdi();
+                        }
                     }
                 });
             });

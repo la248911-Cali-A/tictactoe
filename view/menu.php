@@ -12,7 +12,7 @@
     <h1>TicTacToe</h1>
     <form class="menuPrincipal" action="partie.php" method="post">
         <label class="menuPrincipal-pseudo">Votre pseudo</label> <br>
-        <input class="menuPrincpal-texte" type="text" name="pseudo" placeholder="Entrez votre pseudo">
+        <input class="menuPrincpal-texte" type="text" name="pseudo" placeholder="Entrez votre pseudo" required>
 
         <p>Choisissez votre pion</p>
         <div class="pions">
