@@ -20,8 +20,23 @@
     $pionOrdi = ($pionJoueur == "croix") ? "cercle" : "croix"; // Choix du pion de l'ordi. On prend l'opposé du joueur
     $grille = array_fill(0, 4, array_fill(0, 4, null)); // Création d'un tableau vide pour pouvoir afficher la grille du début
     $pseudo = $_POST["pseudo"];
-    
-    // Affichage du tableau vide de base
+
+    // Si c'est une requête AJAX (rejouer), on renvoie juste le HTML de la grille
+    if (!empty($_POST['rejouer'])) {
+        echo "<table class='grille'>";
+        foreach ($grille as $ligne => $colonnes) {
+            echo '<tr>';
+            foreach ($colonnes as $col => $entree) {
+                $case = '<button class="caseLibre"></button>';
+                echo "<td data-row=\"$ligne\" data-col=\"$col\">$case</td>";
+            }
+            echo '</tr>';
+        }
+        echo '</table>';
+        exit();
+    }
+
+    // Sinon, on affiche un tableau vide de base (quand on joue pour la première fois)
     echo "<table class='grille'>";
     foreach ($grille as $ligne => $colonnes) {
         echo '<tr>';
@@ -40,11 +55,7 @@
             <p id="modal-message"></p>
             <div class="popup-actions">
                 <a href="menu.php" class="pop-up-annuler">Retour au menu</a>
-                <form action="partie.php" method="POST">
-                    <input type="hidden" name="pion" value="<?= $pionJoueur ?>">
-                    <input type="hidden" name="pseudo" value="<?= $pseudo ?>">
-                    <button type="submit" class="pop-up-confirmer">Rejouer</button>
-                </form>
+                <button type="button" id="btn-rejouer" class="pop-up-confirmer">Rejouer</button>
             </div>
         </div>
     </div>
@@ -55,14 +66,16 @@
     let pionOrdi = "<?php echo $pionOrdi ?>";
     let grille = <?php echo json_encode($grille) ?>;
 
+    // Fonction pour ouvrir le pop-up
     function ouvrirModal(message) {
         document.getElementById('modal-message').textContent = message;
         document.getElementById('pop-up').style.display = 'flex';
         document.getElementById('overlay-fond').style.display = 'flex';
     }
 
-    function fermerModal(id) {
-        document.getElementById(id).style.display = 'none';
+    // Fonction pour fermer le pop-up
+    function fermerModal() {
+        document.getElementById('pop-up').style.display = 'none';
         document.getElementById('overlay-fond').style.display = 'none';
     }
 
@@ -112,28 +125,69 @@
     }
 
     // Tour du joueur
-    document.querySelectorAll(".caseLibre").forEach(function (bouton) {
-        bouton.addEventListener("click", function () {
-            let td = this.closest("td");
-            let ligne = td.dataset.row;
-            let col = td.dataset.col;
+    function tourJoueur() {
+        document.querySelectorAll(".caseLibre").forEach(function (bouton) {
+            bouton.addEventListener("click", function () {
+                let td = this.closest("td");
+                let ligne = parseInt(td.dataset.row);
+                let col = parseInt(td.dataset.col);
+ 
+                // On place le pion du joueur dans le tableau
+                grille[ligne][col] = pionJoueur;
+ 
+                // On met à jour l'affichage
+                td.innerHTML = `<img src="../assets/${pionJoueur}.png" alt="${pionJoueur}">`;
 
-            // On place le pion du joueur dans le tableau
-            grille[ligne][col] = pionJoueur;
-
-            // On met à jour l'affichage
-            td.innerHTML = `<img src="../assets/${pionJoueur}.png" alt="${pionJoueur}">`;
-
-            // Après chaque coup, on vérifie si l'ordinateur a gagné
-            let victoire = verifierResultat(pionJoueur);
-            if (victoire) {
-                ouvrirModal("Vous avez gagné !"); // Si oui, on affiche un message comme quoi on a gagné
-            } else {
-                // Si pas, l'ordi joue après le joueur
-                tourOrdi();
-            }
+                // Après chaque coup, on vérifie si le joueur a gagné
+                let victoire = verifierResultat(pionJoueur);
+                if (victoire) {
+                    ouvrirModal("Vous avez gagné !");
+                } else {
+                    tourOrdi();
+                }
+            });
         });
+    }
+
+    function getXMLHttpRequest() {
+        var xhr = null;
+
+        if (window.XMLHttpRequest || window.ActiveXObject) {
+            if (window.ActiveXObject) {
+                try {
+                    xhr = new ActiveXObject("Msxml2.XMLHTTP");
+                } catch (e) {
+                    xhr = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+            } else {
+                xhr = new XMLHttpRequest();
+            }
+        } else {
+            alert("Browser doesn't support XMLHTTPRequest...");
+            return null;
+        }
+
+        return xhr;
+    }
+
+    // Quand on clique sur le bouton "rejouer" en AJAX
+    document.getElementById('btn-rejouer').addEventListener('click', function () {
+        var xhr = getXMLHttpRequest();
+        xhr.open("POST", "partie.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.send("pion=" + pionJoueur + "&pseudo=<?php echo $pseudo; ?>&rejouer=1");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                document.querySelector('.grille').outerHTML = xhr.responseText;
+                grille = <?php echo json_encode($grille) ?>;
+                fermerModal();
+                tourJoueur();
+            }
+        };
     });
+
+    // Au premier chargement de la partie, c'est au joueur de commencer
+    tourJoueur();
 </script>
 
 </html>
