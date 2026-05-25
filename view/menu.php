@@ -35,7 +35,22 @@
                 <input type="radio" name="grilleChoisie" value="4">
                 <img src="../assets/grilleQuatre.jpg" alt="Quatre">
             </label>
+        </div>
 
+        <p>Qui commence à jouer ?</p>
+        <div class="pions">
+            <label class="pion-label">
+                <input type="radio" name="premierJoueur" value="joueur" checked>
+                <img src="../assets/person-fill.svg" alt="Moi">
+            </label>
+            <label class="pion-label">
+                <input type="radio" name="premierJoueur" value="ordi">
+                <img src="../assets/robot.svg" alt="Ordi">
+            </label>
+            <label class="pion-label">
+                <input type="radio" name="premierJoueur" value="aleatoire">
+                <img src="../assets/shuffle.svg" alt="Random">
+            </label>
         </div>
 
         <br>

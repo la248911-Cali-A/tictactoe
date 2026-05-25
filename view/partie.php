@@ -21,6 +21,7 @@
     $tailleGrille = (int) $_POST["grilleChoisie"];
     $grille = array_fill(0, $tailleGrille, array_fill(0, $tailleGrille, null)); // Création d'un tableau vide pour pouvoir afficher la grille du début
     $pseudo = htmlspecialchars($_POST["pseudo"]);
+    $premierJoueur = $_POST["premierJoueur"];
 
     // Si c'est une requête AJAX (rejouer), on renvoie juste le HTML de la grille
     if (!empty($_POST['rejouer'])) {
@@ -69,6 +70,7 @@
         let pionOrdi = "<?php echo $pionOrdi ?>";
         let grille = <?php echo json_encode($grille) ?>;
         let taille = grille.length;
+        let premierJoueur = "<?php echo $premierJoueur; ?>";
 
         // Fonction pour ouvrir le pop-up
         function ouvrirModal(message) {
@@ -237,8 +239,19 @@
             };
         });
 
-        // Au premier chargement de la partie, c'est au joueur de commencer
-        tourJoueur();
+        if (premierJoueur === "aleatoire") {
+            random = Math.random();
+            premierJoueur = random < 0.5 ? "joueur" : "ordi";
+        }
+        if (premierJoueur === "ordi") {
+            // Si l'ordinateur commence, il joue son coup immédiatement
+            tourOrdi();
+            // Puis, c'est au joueur de jouer
+            tourJoueur();
+        } else {
+            // Sinon, c'est au joueur de jouer
+            tourJoueur();
+        }
     </script>
 </body>
 

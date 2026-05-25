@@ -52,7 +52,7 @@ h1 {
     display: none;
 }
 
-.pion-label img {
+.pion-label img, .pion-label svg {
     width: 100px;
     height: 100px;
     cursor: pointer;
