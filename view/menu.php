@@ -25,6 +25,18 @@
                 <img src="../assets/cercle.png" alt="Cercle">
             </label>
         </div>
+        <p>Choisissez votre grille</p>
+        <div class="pions">
+            <label class="pion-label">
+                <input type="radio" name="grilleChoisie" value="3" checked>
+                <img src="../assets/grilleTrois.jpg" alt="Trois">
+            </label>
+            <label class="pion-label">
+                <input type="radio" name="grilleChoisie" value="4">
+                <img src="../assets/grilleQuatre.jpg" alt="Quatre">
+            </label>
+
+        </div>
 
         <br>
         <button type="submit" class="btn-jouer">JOUER</button>
