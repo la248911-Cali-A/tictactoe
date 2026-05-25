@@ -19,6 +19,7 @@
     }
     $pionOrdi = ($pionJoueur == "croix") ? "cercle" : "croix"; // Choix du pion de l'ordi. On prend l'opposé du joueur
     $grille = array_fill(0, 4, array_fill(0, 4, null)); // Création d'un tableau vide pour pouvoir afficher la grille du début
+    $pseudo = $_POST["pseudo"];
     
     // Affichage du tableau vide de base
     echo "<table class='grille'>";
@@ -32,12 +33,38 @@
     }
     echo '</table>';
     ?>
+
+    <div id="overlay-fond" class="popup-overlay"></div>
+    <div id="pop-up" class="popup-modal">
+        <div class="alignPopUp">
+            <p id="modal-message"></p>
+            <div class="popup-actions">
+                <a href="menu.php" class="pop-up-annuler">Retour au menu</a>
+                <form action="partie.php" method="POST">
+                    <input type="hidden" name="pion" value="<?= $pionJoueur ?>">
+                    <input type="hidden" name="pseudo" value="<?= $pseudo ?>">
+                    <button type="submit" class="pop-up-confirmer">Rejouer</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
 
 <script>
     let pionJoueur = "<?php echo $pionJoueur; ?>";
     let pionOrdi = "<?php echo $pionOrdi ?>";
     let grille = <?php echo json_encode($grille) ?>;
+
+    function ouvrirModal(message) {
+        document.getElementById('modal-message').textContent = message;
+        document.getElementById('pop-up').style.display = 'flex';
+        document.getElementById('overlay-fond').style.display = 'flex';
+    }
+
+    function fermerModal(id) {
+        document.getElementById(id).style.display = 'none';
+        document.getElementById('overlay-fond').style.display = 'none';
+    }
 
     // Fonction qui vérifie si un joueur a gagné
     function verifierResultat(pion) {
@@ -80,7 +107,7 @@
         // Après chaque coup, on vérifie si l'ordinateur a gagné
         let victoire = verifierResultat(pionOrdi);
         if (victoire) {
-            alert("L'ordinateur a gagné"); // Si oui, on affiche un message comme quoi l'ordinateur a gagné
+            ouvrirModal("L'ordinateur a gagné !"); // Si oui, on affiche un message comme quoi l'ordinateur a gagné
         }
     }
 
@@ -100,7 +127,7 @@
             // Après chaque coup, on vérifie si l'ordinateur a gagné
             let victoire = verifierResultat(pionJoueur);
             if (victoire) {
-                alert("Vous avez gagné"); // Si oui, on affiche un message comme quoi on a gagné
+                ouvrirModal("Vous avez gagné !"); // Si oui, on affiche un message comme quoi on a gagné
             } else {
                 // Si pas, l'ordi joue après le joueur
                 tourOrdi();
