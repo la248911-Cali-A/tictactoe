@@ -39,6 +39,23 @@
     let pionOrdi = "<?php echo $pionOrdi ?>";
     let grille = <?php echo json_encode($grille) ?>;
 
+    // Fonction qui vérifie si un joueur a gagné
+    function verifierResultat(pion) {
+        // On verifie dans chaque ligne si 4 pions sont alignés
+        for (let ligne = 0; ligne < 4; ligne++) {
+            if (grille[ligne][0] === pion && grille[ligne][1] === pion && grille[ligne][2] === pion && grille[ligne][3] === pion) {
+                return true;
+            }
+        }
+
+        // On vérifie dans chaque colonne si 4 pions sont alignés
+        for (let col = 0; col < 4; col++) {
+            if (grille[0][col] === pion && grille[1][col] === pion && grille[2][col] === pion && grille[3][col] === pion) {
+                return true;
+            }
+        }
+    }
+
     // Tour de l'ordinateur
     function tourOrdi() {
         let casesLibres = [];
@@ -59,6 +76,12 @@
         // On met à jour l'affichage
         let td = document.querySelector(`td[data-row="${caseRandom.ligne}"][data-col="${caseRandom.col}"]`);
         td.innerHTML = `<img src="../assets/${pionOrdi}.png" alt="${pionOrdi}">`;
+
+        // Après chaque coup, on vérifie si l'ordinateur a gagné
+        let victoire = verifierResultat(pionOrdi);
+        if (victoire) {
+            alert("L'ordinateur a gagné"); // Si oui, on affiche un message comme quoi l'ordinateur a gagné
+        }
     }
 
     // Tour du joueur
@@ -74,8 +97,14 @@
             // On met à jour l'affichage
             td.innerHTML = `<img src="../assets/${pionJoueur}.png" alt="${pionJoueur}">`;
 
-            // L'ordi joue après le joueur
-            tourOrdi();
+            // Après chaque coup, on vérifie si l'ordinateur a gagné
+            let victoire = verifierResultat(pionJoueur);
+            if (victoire) {
+                alert("Vous avez gagné"); // Si oui, on affiche un message comme quoi on a gagné
+            } else {
+                // Si pas, l'ordi joue après le joueur
+                tourOrdi();
+            }
         });
     });
 </script>
