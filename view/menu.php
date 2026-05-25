@@ -29,11 +29,11 @@
         <div class="pions">
             <label class="pion-label">
                 <input type="radio" name="grilleChoisie" value="3" checked>
-                <img src="../assets/grilleTrois.jpg" alt="Trois">
+                <img src="../assets/grilleTrois.png" alt="Trois">
             </label>
             <label class="pion-label">
                 <input type="radio" name="grilleChoisie" value="4">
-                <img src="../assets/grilleQuatre.jpg" alt="Quatre">
+                <img src="../assets/grilleQuatre.png" alt="Quatre">
             </label>
         </div>
 
