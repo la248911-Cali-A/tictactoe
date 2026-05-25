@@ -132,38 +132,77 @@ h1 {
     position: fixed;
     top: 50%;
     left: 50%;
-    background: #999999;
-    color: white;
+    background: white;
     padding: 40px;
     border-radius: 15px;
+    border: 1px solid;
     width: 90%;
-    max-width: 500px;
+    max-width: 550px;
     text-align: center;
     z-index: 1000;
     animation: popIn 0.3s ease-out forwards;
 }
 
+#modal-message {
+    font-size: 24px;
+    font-weight: 600;
+    color: #111;
+    margin-bottom: 30px;
+}
+
 .popup-actions {
     display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.btn-retour {
+    flex: 1;
+    padding: 16px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #555;
+    background-color: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
     justify-content: center;
     gap: 20px;
 }
 
-.pop-up-rejouer {
-    background-color: #8e8e8e;
-    color: white;
-    padding: 10px 30px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 1rem;
-    transition: transform 0.1s;
+.btn-retour:hover {
+    background-color: #ebebeb;
+    transform: scale(1.05);
 }
 
-.pop-up-rejouer:hover {
-    background-color: #5a5a5a;
+.btn-rejouer {
+    flex: 1;
+    padding: 16px;
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    background-color: #3075c3;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.btn-rejouer:hover {
+    background-color: #3b98df;
     transform: scale(1.05);
+}
+
+.alignPopUp {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centre horizontalement le texte et les boutons */
+    width: 100%;
 }
 
 @keyframes popIn {

@@ -54,8 +54,8 @@
         <div class="alignPopUp">
             <p id="modal-message"></p>
             <div class="popup-actions">
-                <a href="menu.php" class="pop-up-annuler">Retour au menu</a>
-                <button type="button" id="btn-rejouer" class="pop-up-confirmer">Rejouer</button>
+                <a href="menu.php" class="btn-retour">Retour au menu</a>
+                <button type="button" id="btn-rejouer" class="btn-rejouer">Rejouer</button>
             </div>
         </div>
     </div>
