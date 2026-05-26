@@ -37,16 +37,16 @@
                 </label>
             </div>
             <p>Choisissez votre grille</p>
-            <div class="pions">
-                <label class="pion-label">
-                    <input type="radio" name="grilleChoisie" value="3" checked>
-                    <img src="../assets/grilleTrois.png" alt="Trois">
-                </label>
-                <label class="pion-label">
-                    <input type="radio" name="grilleChoisie" value="4">
-                    <img src="../assets/grilleQuatre.png" alt="Quatre">
-                </label>
-            </div>
+            <?php
+            echo "<div class=\"pions\">";
+            foreach ($tailles as $taille) {
+                echo "<label class=\"pion-label\">";
+                echo "<input type=\"radio\" name=\"grilleChoisie\" value=\"$taille\" checked>";
+                echo "<img src=\"../assets/grille$taille.png\" alt=\"{$taille}x{$taille}\">";
+                echo "</label>";
+            }
+            echo "</div>";
+            ?>
 
             <p>Qui commence à jouer ?</p>
             <div class="pions">
