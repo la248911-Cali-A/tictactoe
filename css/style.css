@@ -215,3 +215,46 @@ h1 {
         opacity: 1;
     }
 }
+
+/* Classements */
+.pageMenu {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+.classement-table {
+    border-collapse: collapse;
+    background: #e8e8e8;
+    border-radius: 16px;
+    overflow: hidden;
+    width: 300px;
+}
+
+.classement-table caption {
+    font-size: 24px;
+    font-weight: 900;
+    padding: 16px;
+    background-color: #30c341;
+    color: white;
+    letter-spacing: 2px;
+}
+
+.classement-table th {
+    background-color: #d0d0d0;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.classement-table td {
+    padding: 10px;
+    font-size: 16px;
+    border-top: 1px solid #cfcfcf;
+    text-align: center;
+}
+
+.classement-table tr:hover td {
+    background-color: #d6d6d6;
+}
