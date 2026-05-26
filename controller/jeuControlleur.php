@@ -1,8 +1,8 @@
 <?php
-require_once 'models/Joueur.php';
-require_once 'models/Partie.php';
+require_once __DIR__ . '/../model/joueurModel.php';
+require_once __DIR__ . '/../model/partieModel.php';
 
-class JeuController
+class JeuControlleur
 {
     private Joueur $joueurModel;
     private Partie $partieModel;

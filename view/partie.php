@@ -10,6 +10,9 @@
 
 <body>
     <?php
+    require_once '../controller/jeuControlleur.php';
+    $controller = new JeuControlleur();
+
     // Si on rentre sur cette page sans être passé par le bouton jouer, alors on revient au menu
     if (empty($_POST["pion"]) || empty($_POST["pseudo"])) {
         header("Location: menu.php");
@@ -22,7 +25,8 @@
     $grille = array_fill(0, $tailleGrille, array_fill(0, $tailleGrille, null)); // Création d'un tableau vide pour pouvoir afficher la grille du début
     $pseudo = htmlspecialchars($_POST["pseudo"]);
     $premierJoueur = $_POST["premierJoueur"];
-
+    $joueur = $controller->demarrerPartie($pseudo); // On démarre la partie en créant ou récupérant le joueur
+    
     // Si c'est une requête AJAX (rejouer), on renvoie juste le HTML de la grille
     if (!empty($_POST['rejouer'])) {
         echo "<table class='grille'>";
@@ -35,6 +39,11 @@
             echo '</tr>';
         }
         echo '</table>';
+        exit();
+    }
+    // Et on enregistre le résultat de la partie précédente
+    if (!empty($_POST['resultat'])) {
+        $controller->terminerPartie($pseudo, $_POST['resultat'], $tailleGrille);
         exit();
     }
 
@@ -51,6 +60,14 @@
     echo '</table>';
     ?>
 
+    <!-- On affiche les statistiques du joueur -->
+    <div class="stats">
+        <p>Joueur : <?php echo $pseudo; ?></p>
+        <p>Victoires : <span id="nb-victoires"><?php echo $joueur['nb_victoires']; ?></span></p>
+        <p>Défaites : <span id="nb-defaites"><?php echo $joueur['nb_defaites']; ?></span></p>
+        <p>Nuls : <span id="nb-nuls"><?php echo $joueur['nb_nuls']; ?></span></p>
+    </div>
+
     <br>
     <a href="menu.php">Retour au menu</a>
 
@@ -66,6 +83,8 @@
     </div>
 
     <script>
+        // On récupère toutes les informations de la partie dans des variables
+        let pseudo = "<?php echo $pseudo; ?>";
         let pionJoueur = "<?php echo $pionJoueur; ?>";
         let pionOrdi = "<?php echo $pionOrdi ?>";
         let grille = <?php echo json_encode($grille) ?>;
@@ -162,6 +181,7 @@
             // Après chaque coup, on vérifie si l'ordinateur a gagné
             let victoire = verifierResultat(pionOrdi);
             if (victoire) {
+                sauvegarderPartie("defaite"); // On sauvegarde la partie en précisant la défaite
                 ouvrirModal("L'ordinateur a gagné !"); // Si oui, on affiche un message comme quoi l'ordinateur a gagné
             }
         }
@@ -184,6 +204,7 @@
                     // Après chaque coup, on vérifie si le joueur a gagné
                     let victoire = verifierResultat(pionJoueur);
                     if (victoire) {
+                        sauvegarderPartie("victoire"); // On sauvegarde la partie en précisant la victoire
                         ouvrirModal("Vous avez gagné !");
                     } else {
                         for (let i = 0; i < taille; i++) {
@@ -193,6 +214,7 @@
                         }
 
                         if (casesLibres.length === 0) {
+                            sauvegarderPartie("nul"); // On sauvegarde la partie en précisant le match nul
                             ouvrirModal("Match nul ! Voulez-vous rejouer ?");
                         } else {
                             tourOrdi();
@@ -228,7 +250,7 @@
             var xhr = getXMLHttpRequest();
             xhr.open("POST", "partie.php", true);
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            xhr.send("pion=" + pionJoueur + "&pseudo=<?php echo $pseudo; ?>&grilleChoisie=" + taille + "&rejouer=1");
+            xhr.send("pion=" + pionJoueur + "&pseudo=<?php echo $pseudo; ?>&grilleChoisie=" + taille + "&rejouer=1&premierJoueur=" + premierJoueur);
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     document.querySelector('.grille').outerHTML = xhr.responseText;
@@ -238,6 +260,26 @@
                 }
             };
         });
+
+        // On sauvegarde la partie en DB et on met à jour les stats affichées
+        function sauvegarderPartie(resultat) {
+            var xhr = getXMLHttpRequest();
+            xhr.open("POST", "partie.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.send("pion=" + pionJoueur + "&pseudo=" + pseudo + "&grilleChoisie=" + taille + "&resultat=" + resultat);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    // On met à jour les stats affichées
+                    if (resultat === 'victoire') {
+                        document.getElementById('nb-victoires').textContent++;
+                    } else if (resultat === 'defaite') {
+                        document.getElementById('nb-defaites').textContent++;
+                    } else {
+                        document.getElementById('nb-nuls').textContent++;
+                    }
+                }
+            };
+        }
 
         if (premierJoueur === "aleatoire") {
             random = Math.random();
