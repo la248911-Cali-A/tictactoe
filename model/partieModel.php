@@ -42,7 +42,8 @@ class Partie
                     JOIN Joueur j ON p.Id_Joueur = j.Id_Joueur
                     WHERE taille_grille = ? AND resultat = 1
                     GROUP BY j.pseudo
-                    ORDER BY nb_victoires DESC";
+                    ORDER BY nb_victoires DESC
+                    LIMIT 5";
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute([$tailleGrille]);
             $resultat = $stmt->fetchAll();
