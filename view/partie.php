@@ -46,7 +46,29 @@
         $controller->terminerPartie($pseudo, $_POST['resultat'], $tailleGrille);
         exit();
     }
+    ?>
+    
+    <!-- On affiche les statistiques du joueur -->
+    <div class="stats">
+        <p class="stats-titre"><?php echo $pseudo; ?></p>
+        <div class="stats-grille">
+            <div class="stats-carte victoires">
+                <span class="stats-nombre" id="nb-victoires"><?php echo $joueur['nb_victoires']; ?></span>
+                <span class="stats-label">Victoires</span>
+            </div>
+            <div class="stats-carte defaites">
+                <span class="stats-nombre" id="nb-defaites"><?php echo $joueur['nb_defaites']; ?></span>
+                <span class="stats-label">Défaites</span>
+            </div>
+            <div class="stats-carte nuls">
+                <span class="stats-nombre" id="nb-nuls"><?php echo $joueur['nb_nuls']; ?></span>
+                <span class="stats-label">Nuls</span>
+            </div>
+        </div>
+    </div>
+    <br>
 
+    <?php
     // Sinon, on affiche un tableau vide de base (quand on joue pour la première fois)
     echo "<table class='grille'>";
     foreach ($grille as $ligne => $colonnes) {
@@ -60,13 +82,6 @@
     echo '</table>';
     ?>
 
-    <!-- On affiche les statistiques du joueur -->
-    <div class="stats">
-        <p>Joueur : <?php echo $pseudo; ?></p>
-        <p>Victoires : <span id="nb-victoires"><?php echo $joueur['nb_victoires']; ?></span></p>
-        <p>Défaites : <span id="nb-defaites"><?php echo $joueur['nb_defaites']; ?></span></p>
-        <p>Nuls : <span id="nb-nuls"><?php echo $joueur['nb_nuls']; ?></span></p>
-    </div>
 
     <br>
     <a href="menu.php">Retour au menu</a>
