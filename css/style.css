@@ -219,8 +219,17 @@ h1 {
 /* Classements */
 .pageMenu {
     display: flex;
+    flex-direction: row;
     gap: 40px;
     align-items: flex-start;
+    justify-content: center;
+}
+
+.classements {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    justify-content: center;
 }
 
 .classement-table {
@@ -308,4 +317,64 @@ h1 {
     color: #888;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 36px;
+    }
+
+    .pageMenu {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        padding: 0 16px;
+        box-sizing: border-box;
+    }
+
+    .menuPrincipal {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 24px 16px;
+    }
+
+    .classement-table {
+        width: 100%;
+    }
+
+    .pion-label img,
+    .pion-label svg {
+        width: 70px;
+        height: 70px;
+    }
+
+    .grille td {
+        width: 100px;
+        height: 100px;
+    }
+
+    .grille td img {
+        width: 75px;
+        height: 75px;
+    }
+
+    .stats {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .stats-grille {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .popup-modal {
+        width: 95%;
+        padding: 24px 16px;
+    }
+
+    .popup-actions {
+        flex-direction: column;
+    }
 }

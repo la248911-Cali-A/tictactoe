@@ -82,10 +82,6 @@
     echo '</table>';
     ?>
 
-
-    <br>
-    <a href="menu.php">Retour au menu</a>
-
     <div id="overlay-fond" class="popup-overlay"></div>
     <div id="pop-up" class="popup-modal">
         <div class="alignPopUp">

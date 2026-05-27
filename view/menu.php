@@ -67,24 +67,25 @@
             <br>
             <button type="submit" class="btn-jouer">JOUER</button>
         </form>
-
-        <?php
-        foreach ($classements as $taille => $classement) {
-            echo "<table class='classement-table'>";
-            echo "<caption>Top 5 des parties en " . $taille . "x" . $taille . "</caption>";
-            echo "<tr><th>Pseudo</th><th>Nombre de victoires</th></tr>";
-            foreach ($classement as $joueur) {
-                echo "<tr>";
-                echo "<td>" . $joueur['pseudo'] . "</td>";
-                echo "<td>" . $joueur['nb_victoires'] . "</td>";
-                echo "</tr>";
+        <div class="classements">
+            <?php
+            foreach ($classements as $taille => $classement) {
+                echo "<table class='classement-table'>";
+                echo "<caption>Top 5 des parties en " . $taille . "x" . $taille . "</caption>";
+                echo "<tr><th>Pseudo</th><th>Nombre de victoires</th></tr>";
+                foreach ($classement as $joueur) {
+                    echo "<tr>";
+                    echo "<td>" . $joueur['pseudo'] . "</td>";
+                    echo "<td>" . $joueur['nb_victoires'] . "</td>";
+                    echo "</tr>";
+                }
+                if (!$classement) {
+                    echo "<tr><td colspan=2>Pas de résultats disponibles</td></tr>";
+                }
+                echo "</table>";
             }
-            if (!$classement) {
-                echo "<tr><td colspan=2>Pas de résultats disponibles</td></tr>";
-            }
-            echo "</table>";
-        }
-        ?>
+            ?>
+        </div>
     </div>
 </body>
 
