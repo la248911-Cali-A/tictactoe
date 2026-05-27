@@ -266,7 +266,7 @@
             var xhr = getXMLHttpRequest();
             xhr.open("POST", "partie.php", true);
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            xhr.send("pion=" + pionJoueur + "&pseudo=" + pseudo + "&grilleChoisie=" + taille + "&resultat=" + resultat);
+            xhr.send("pion=" + pionJoueur + "&pseudo=" + pseudo + "&grilleChoisie=" + taille + "&resultat=" + resultat + "&premierJoueur=" + premierJoueur);
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     // On met à jour les stats affichées
