@@ -14,12 +14,21 @@
     $controller = new JeuControlleur();
 
     // Si on rentre sur cette page sans être passé par le bouton jouer, alors on revient au menu
-    if (empty($_POST["pion"]) || empty($_POST["pseudo"])) {
+    if (empty($_POST["pion"]) || empty($_POST["pseudo"]) || empty($_POST["premierJoueur"])) {
+        header("Location: menu.php");
+        exit();
+    }
+
+    // Si on a injecté un pion ou un choix non valide, on revient au menu
+    $pionsValides = ["croix", "cercle"];
+    $premiersJoueursValides = ["joueur", "ordi", "aleatoire"];
+    if (!in_array($_POST["pion"], $pionsValides) || !in_array($_POST["premierJoueur"], $premiersJoueursValides)) {
         header("Location: menu.php");
         exit();
     } else {
         $pionJoueur = $_POST["pion"]; // Sinon, on enregistre le pion choisi par le joueur
     }
+    
     $pionOrdi = ($pionJoueur == "croix") ? "cercle" : "croix"; // Choix du pion de l'ordi. On prend l'opposé du joueur
     $tailleGrille = (int) $_POST["grilleChoisie"];
     $grille = array_fill(0, $tailleGrille, array_fill(0, $tailleGrille, null)); // Création d'un tableau vide pour pouvoir afficher la grille du début
