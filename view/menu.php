@@ -39,11 +39,13 @@
             <p>Choisissez votre grille</p>
             <?php
             echo "<div class=\"pions\">";
+            $premierChoix = true;
             foreach ($tailles as $taille) {
                 echo "<label class=\"pion-label\">";
-                echo "<input type=\"radio\" name=\"grilleChoisie\" value=\"$taille\" checked>";
+                echo "<input type=\"radio\" name=\"grilleChoisie\" value=\"$taille\" " . ($premierChoix ? "checked" : "") . ">";
                 echo "<img src=\"../assets/grille$taille.png\" alt=\"{$taille}x{$taille}\">";
                 echo "</label>";
+                $premierChoix = false;
             }
             echo "</div>";
             ?>
