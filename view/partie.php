@@ -47,7 +47,7 @@
         exit();
     }
     ?>
-    
+
     <!-- On affiche les statistiques du joueur -->
     <div class="stats">
         <p class="stats-titre"><?php echo $pseudo; ?></p>
@@ -121,52 +121,19 @@
 
         // Fonction qui vérifie si un joueur a gagné
         function verifierResultat(pion) {
-            if (taille === 3) {
-                // On verifie dans chaque ligne si 3 pions sont alignés
-                for (let ligne = 0; ligne < 3; ligne++) {
-                    if (grille[ligne][0] === pion && grille[ligne][1] === pion && grille[ligne][2] === pion) {
-                        return true;
-                    }
-                }
-
-                // On verifie dans chaque ligne si 3 pions sont alignés
-                for (let col = 0; col < 3; col++) {
-                    if (grille[0][col] === pion && grille[1][col] === pion && grille[2][col] === pion) {
-                        return true;
-                    }
-                }
-
-                // On vérifie également les diagonales
-                if (grille[0][0] === pion && grille[1][1] === pion && grille[2][2] === pion) {
-                    return true;
-                }
-                if (grille[0][2] === pion && grille[1][1] === pion && grille[2][0] === pion) {
-                    return true;
-                }
-
-            } else {
-                // On verifie dans chaque ligne si 4 pions sont alignés
-                for (let ligne = 0; ligne < 4; ligne++) {
-                    if (grille[ligne][0] === pion && grille[ligne][1] === pion && grille[ligne][2] === pion && grille[ligne][3] === pion) {
-                        return true;
-                    }
-                }
-
-                // On verifie dans chaque ligne si 3 pions sont alignés
-                for (let col = 0; col < 4; col++) {
-                    if (grille[0][col] === pion && grille[1][col] === pion && grille[2][col] === pion && grille[3][col] === pion) {
-                        return true;
-                    }
-                }
-
-                // On vérifie également les diagonales
-                if (grille[0][0] === pion && grille[1][1] === pion && grille[2][2] === pion && grille[3][3] === pion) {
-                    return true;
-                }
-                if (grille[0][3] === pion && grille[1][2] === pion && grille[2][1] === pion && grille[3][0] === pion) {
-                    return true;
-                }
+            // On verifie dans chaque ligne si 3 pions sont alignés
+            for (let ligne = 0; ligne < taille; ligne++) {
+                if (grille[ligne].every(col => col === pion)) { return true; }
             }
+
+            // On verifie dans chaque colonne si 3 pions sont alignés
+            for (let col = 0; col < taille; col++) {
+                if (grille.every(ligne => ligne[col] === pion)) { return true; }
+            }
+
+            // On vérifie également les diagonales
+            if (grille.every((ligne, i) => ligne[i] === pion)) { return true; }
+            if (grille.every((ligne, i) => ligne[taille - 1 - i] === pion)) { return true; }
 
             // Si aucune condition de victoire n'est remplie
             return false;
