@@ -183,6 +183,19 @@
             if (victoire) {
                 sauvegarderPartie("defaite"); // On sauvegarde la partie en précisant la défaite
                 ouvrirModal("L'ordinateur a gagné !"); // Si oui, on affiche un message comme quoi l'ordinateur a gagné
+            } else {
+                // On recalcule les cases libres après le coup de l'ordi
+                let casesLibresApres = [];
+                for (let i = 0; i < taille; i++) {
+                    for (let j = 0; j < taille; j++) {
+                        if (grille[i][j] === null) casesLibresApres.push({ i, j });
+                    }
+                }
+
+                if (casesLibresApres.length === 0) {
+                    sauvegarderPartie("nul"); // On sauvegarde la partie en précisant le match nul
+                    ouvrirModal("Match nul ! Voulez-vous rejouer ?");
+                }
             }
         }
 
