@@ -5,9 +5,9 @@ class Partie
 {
     private PDO $pdo;
 
-    public function __construct()
+    public function __construct(?PDO $pdo = null)
     {
-        $this->pdo = Database::getInstance()->connect();
+        $this->pdo = $pdo ?? Database::getInstance()->connect();
     }
 
     public function savePartie(int $idJoueur, string $resultat, int $tailleGrille)
