@@ -126,12 +126,12 @@
 
         // Fonction qui vérifie si un joueur a gagné
         function verifierResultat(pion) {
-            // On verifie dans chaque ligne si 3 pions sont alignés
+            // On verifie dans chaque ligne si tout les pions sont alignés
             for (let ligne = 0; ligne < taille; ligne++) {
                 if (grille[ligne].every(col => col === pion)) { return true; }
             }
 
-            // On verifie dans chaque colonne si 3 pions sont alignés
+            // On verifie dans chaque colonne si tout les pions sont alignés
             for (let col = 0; col < taille; col++) {
                 if (grille.every(ligne => ligne[col] === pion)) { return true; }
             }
