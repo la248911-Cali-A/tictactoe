@@ -12,6 +12,7 @@ Application web de Morpion jouable contre l'ordinateur, avec sauvegarde des stat
 - [Prérequis](#prérequis)
 - [Installation](#installation)
 - [Configuration de la base de données](#configuration-de-la-base-de-données)
+- [Comment jouer](#comment-jouer)
 - [Structure du projet](#structure-du-projet)
 - [Lancer les tests](#lancer-les-tests)
 
@@ -115,6 +116,14 @@ private string $password = ''; // Vide par défaut avec XAMPP
 ```
 
 ---
+
+## Comment jouer
+
+1. Rendez-vous sur [http://localhost/tictactoe](http://localhost/tictactoe)
+2. Entrez votre pseudo, choisissez votre pion, la taille de la grille, qui commence, puis cliquez sur **Jouer**
+3. Cliquez sur une case libre pour placer votre pion, ou attendez que l'ordinateur joue
+4. Alignez vos pions en ligne, colonne ou diagonale pour remporter la partie
+5. En fin de partie, cliquez sur **Rejouer** pour relancer une partie avec les mêmes paramètres, ou sur **Retour au menu** pour revenir à l'accueil
 
 ## Structure du projet
 
